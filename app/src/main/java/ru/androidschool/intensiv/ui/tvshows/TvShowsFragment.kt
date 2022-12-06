@@ -9,7 +9,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
-import ru.androidschool.intensiv.ui.movie_details.Movie
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
     private var _binding: TvShowsFragmentBinding? = null
