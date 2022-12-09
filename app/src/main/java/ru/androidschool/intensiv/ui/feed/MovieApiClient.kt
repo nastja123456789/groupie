@@ -19,4 +19,11 @@ object MovieApiClient {
             .build()
         return@lazy retrofit.create(MovieApiInterfaceRecommended::class.java)
     }
+    val apiClientPopular: tvPopularInterface by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return@lazy retrofit.create(tvPopularInterface::class.java)
+    }
 }

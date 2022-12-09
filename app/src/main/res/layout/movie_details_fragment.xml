@@ -255,6 +255,7 @@
             android:text="Год релиза"/>
 
         <TextView
+            android:id="@+id/ageOfRealise"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="2018"

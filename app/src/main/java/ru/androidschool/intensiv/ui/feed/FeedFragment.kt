@@ -55,7 +55,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val call = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
         call.enqueue(object : retrofit2.Callback<MoviesResponse> {
             override fun onResponse(
@@ -123,14 +122,24 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
     private fun openMovieDetails(movie: MovieModel) {
         val bundle = Bundle()
         bundle.putString(KEY_TITLE, movie.title)
-        binding.moviesRecyclerView.adapter = adapter.apply { removeAll(moviesList) }
-        binding.moviesRecyclerView.adapter = adapter.apply { removeAll(moviesListRecommended) }
+        bundle.putString("image",movie.posterPath)
+        bundle.putString("overview", movie.overview)
+        bundle.putString("release",movie.releaseDate)
+        adapter.apply {
+            removeAll(moviesList)
+            removeAll(moviesListRecommended)
+        }
+
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
 
     private fun openSearch(searchText: String) {
         val bundle = Bundle()
         bundle.putString(KEY_SEARCH, searchText)
+        adapter.apply {
+            removeAll(moviesList)
+            removeAll(moviesListRecommended)
+        }
         findNavController().navigate(R.id.search_dest, bundle, options)
     }
 

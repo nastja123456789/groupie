@@ -9,6 +9,7 @@ import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
 import androidx.core.content.res.ComplexColorCompat.inflate
 import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.fragment.app.Fragment
+import coil.api.load
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import ru.androidschool.intensiv.R
@@ -38,7 +39,13 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var title = arguments?.getInt("title")
+        var title = arguments?.getString("title")
         binding.detailText.text = title.toString()
+        var image = arguments?.getString("image")
+        binding.detailImage.load(image)
+        var overview = arguments?.getString("overview")
+        binding.detailDescription.text = overview.toString()
+        var release = arguments?.getString("release")
+        binding.ageOfRealise.text = release.toString()
     }
 }
