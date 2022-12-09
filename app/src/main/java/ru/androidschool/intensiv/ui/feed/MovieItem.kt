@@ -8,7 +8,7 @@ import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.ItemWithTextBinding
 
 class MovieItem(
-    private val content: Movie,
+    private val content: MovieModel,
     private val onClick: (movie: Movie) -> Unit
 ) : BindableItem<ItemWithTextBinding>() {
 
@@ -16,10 +16,10 @@ class MovieItem(
 
     override fun bind(view: ItemWithTextBinding, position: Int) {
         view.description.text = content.title
-        view.movieRating.rating = content.rating
-        view.content.setOnClickListener {
-            onClick.invoke(content)
-        }
+        //view.movieRating.rating = content.rating
+        //view.content.setOnClickListener {
+        //    onClick.invoke(content)
+        //}
 
         // TODO Получать из модели
         Picasso.get()

@@ -1,14 +1,17 @@
 package ru.androidschool.intensiv.ui.feed
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import retrofit2.Call
+import retrofit2.Response
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
 import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
@@ -50,8 +53,34 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val call = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
+        call.enqueue(object : retrofit2.Callback<MoviesResponse> {
+            override fun onResponse(
+                call: Call<MoviesResponse>,
+                response: Response<MoviesResponse>
+            ) {
+                val movies = response.body()!!.results
+                // Передаем результат в adapter и отображаем элементы
+                val moviesList = listOf(
+                    MainCardContainer(
+                        R.string.recommended,
+                        movies.map {
+                            MovieItem(it) { movie ->
+                                openMovieDetails(
+                                    movie
+                                )
+                            }
+                        }.toList()
+                    )
+                )
 
-
+                binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
+            }
+            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString())
+            }
+        })
         searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
             Timber.d(it.toString())
             if (it.toString().length > MIN_LENGTH) {
@@ -60,35 +89,35 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         }
 
         // Используя Мок-репозиторий получаем фэйковый список фильмов
-        val moviesList = listOf(
-            MainCardContainer(
-                R.string.recommended,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(
-                            movie
-                        )
-                    }
-                }.toList()
-            )
-        )
-
-        binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
+//        val moviesList = listOf(
+//            MainCardContainer(
+//                R.string.recommended,
+//                MockRepository.getMovies().map {
+//                    MovieItem(it) { movie ->
+//                        openMovieDetails(
+//                            movie
+//                        )
+//                    }
+//                }.toList()
+//            )
+//        )
+//
+//        binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
 
         // Используя Мок-репозиторий получаем фэйковый список фильмов
         // Чтобы отобразить второй ряд фильмов
-        val newMoviesList = listOf(
-            MainCardContainer(
-                R.string.upcoming,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(movie)
-                    }
-                }.toList()
-            )
-        )
-
-        adapter.apply { addAll(newMoviesList) }
+//        val newMoviesList = listOf(
+//            MainCardContainer(
+//                R.string.upcoming,
+//                MockRepository.getMovies().map {
+//                    MovieItem(it) { movie ->
+//                        openMovieDetails(movie)
+//                    }
+//                }.toList()
+//            )
+//        )
+//
+//        adapter.apply { addAll(newMoviesList) }
     }
 
     private fun openMovieDetails(movie: Movie) {
@@ -122,5 +151,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         const val MIN_LENGTH = 3
         const val KEY_TITLE = "title"
         const val KEY_SEARCH = "search"
+        const val API_KEY = "38021fe5bd0d26b759953028cf30ab6d"
     }
 }
