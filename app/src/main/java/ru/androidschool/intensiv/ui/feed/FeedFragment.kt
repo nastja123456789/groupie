@@ -12,7 +12,6 @@ import com.xwray.groupie.GroupieViewHolder
 import retrofit2.Call
 import retrofit2.Response
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.ui.afterTextChanged
@@ -41,6 +40,9 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         }
     }
 
+    private var moviesList = listOf<MainCardContainer>()
+    private var moviesListRecommended = listOf<MainCardContainer>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,6 +55,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val call = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
         call.enqueue(object : retrofit2.Callback<MoviesResponse> {
             override fun onResponse(
@@ -61,7 +64,35 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             ) {
                 val movies = response.body()!!.results
                 // Передаем результат в adapter и отображаем элементы
-                val moviesList = listOf(
+                moviesList = listOf(
+                    MainCardContainer(
+                        R.string.upcoming,
+                        movies.map {
+                            MovieItem(it) { movie ->
+                                openMovieDetails(
+                                    movie
+                                )
+                            }
+                        }.toList()
+                    )
+                )
+                binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
+            }
+            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString())
+            }
+        })
+
+        val callRecommended = MovieApiClient.apiClientRecommended.getTopRatedMovies(API_KEY, "ru")
+        callRecommended.enqueue(object : retrofit2.Callback<MoviesResponse> {
+            override fun onResponse(
+                call: Call<MoviesResponse>,
+                response: Response<MoviesResponse>
+            ) {
+                val movies = response.body()!!.results
+                // Передаем результат в adapter и отображаем элементы
+                moviesListRecommended = listOf(
                     MainCardContainer(
                         R.string.recommended,
                         movies.map {
@@ -73,56 +104,27 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                         }.toList()
                     )
                 )
-
-                binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
+                binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesListRecommended) }
             }
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString())
             }
         })
+
         searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
             Timber.d(it.toString())
             if (it.toString().length > MIN_LENGTH) {
                 openSearch(it.toString())
             }
         }
-
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-//        val moviesList = listOf(
-//            MainCardContainer(
-//                R.string.recommended,
-//                MockRepository.getMovies().map {
-//                    MovieItem(it) { movie ->
-//                        openMovieDetails(
-//                            movie
-//                        )
-//                    }
-//                }.toList()
-//            )
-//        )
-//
-//        binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
-
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-        // Чтобы отобразить второй ряд фильмов
-//        val newMoviesList = listOf(
-//            MainCardContainer(
-//                R.string.upcoming,
-//                MockRepository.getMovies().map {
-//                    MovieItem(it) { movie ->
-//                        openMovieDetails(movie)
-//                    }
-//                }.toList()
-//            )
-//        )
-//
-//        adapter.apply { addAll(newMoviesList) }
     }
 
-    private fun openMovieDetails(movie: Movie) {
+    private fun openMovieDetails(movie: MovieModel) {
         val bundle = Bundle()
         bundle.putString(KEY_TITLE, movie.title)
+        binding.moviesRecyclerView.adapter = adapter.apply { removeAll(moviesList) }
+        binding.moviesRecyclerView.adapter = adapter.apply { removeAll(moviesListRecommended) }
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
 
@@ -151,6 +153,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         const val MIN_LENGTH = 3
         const val KEY_TITLE = "title"
         const val KEY_SEARCH = "search"
-        const val API_KEY = "38021fe5bd0d26b759953028cf30ab6d"
+        const val API_KEY = ""
     }
 }
