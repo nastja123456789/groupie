@@ -83,7 +83,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             }
         })
 
-        val callRecommended = MovieApiClient.apiClientRecommended.getTopRatedMovies(API_KEY, "ru")
+        val callRecommended = MovieApiClient.apiClient.getNowPlayingMovies(API_KEY, "ru")
         callRecommended.enqueue(object : retrofit2.Callback<MoviesResponse> {
             override fun onResponse(
                 call: Call<MoviesResponse>,
@@ -125,6 +125,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         bundle.putString("image",movie.posterPath)
         bundle.putString("overview", movie.overview)
         bundle.putString("release",movie.releaseDate)
+        bundle.putInt("rating",movie.voteAverage!!.toInt())
         adapter.apply {
             removeAll(moviesList)
             removeAll(moviesListRecommended)

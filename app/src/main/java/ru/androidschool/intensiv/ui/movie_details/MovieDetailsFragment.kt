@@ -47,5 +47,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         binding.detailDescription.text = overview.toString()
         var release = arguments?.getString("release")
         binding.ageOfRealise.text = release.toString()
+        var rating = arguments?.getInt("rating")
+        binding.movieRating.rating = rating!!.toFloat()
     }
 }
