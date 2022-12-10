@@ -19,5 +19,15 @@
     <dimen name="dimens_32">32dp</dimen>
     <dimen name="search_bar_height">56dp</dimen>
     <dimen name="min_height">100dp</dimen>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="height_40">40dp</dimen>
+    <dimen name="text_24">24dp</dimen>
+    <dimen name="width_370">370dp</dimen>
+    <dimen name="height_200">200dp</dimen>
+    <dimen name="height_80">80dp</dimen>
+    <dimen name="width_80">80dp</dimen>
+    <dimen name="height_250">250dp</dimen>
+    <dimen name="width_100">100dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
 
 </resources>

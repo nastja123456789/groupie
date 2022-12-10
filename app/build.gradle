@@ -73,10 +73,10 @@ dependencies {
     implementation "com.github.lisawray.groupie:groupie:$rootProject.groupieVersion"
     implementation "com.github.lisawray.groupie:groupie-viewbinding:$rootProject.groupieVersion"
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
-    implementation ("io.coil-kt:coil:0.11.0")
+    implementation "io.coil-kt:coil:$rootProject.coilVersion"
 
     // retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.interceptorVersion"
 }

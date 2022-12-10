@@ -163,6 +163,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         const val MIN_LENGTH = 3
         const val KEY_TITLE = "title"
         const val KEY_SEARCH = "search"
-        const val API_KEY = ""
+        const val API_KEY = "38021fe5bd0d26b759953028cf30ab6d"
     }
 }
