@@ -1,6 +1,7 @@
 package ru.androidschool.intensiv.ui.feed
 
 import android.content.ContentValues.TAG
+import android.database.Observable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -9,13 +10,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Response
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.ui.afterTextChanged
+import ru.androidschool.intensiv.ui.tvshows.Movie
 import timber.log.Timber
+import java.util.function.BiFunction
 
 class FeedFragment : Fragment(R.layout.feed_fragment) {
 
@@ -56,14 +62,14 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val call = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
-        call.enqueue(object : retrofit2.Callback<MoviesResponse> {
-            override fun onResponse(
-                call: Call<MoviesResponse>,
-                response: Response<MoviesResponse>
-            ) {
-                val movies = response.body()!!.results
-                // Передаем результат в adapter и отображаем элементы
-                moviesList = listOf(
+        call
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                        it ->
+                    val movies = it.results
+                    moviesList = listOf(
                     MainCardContainer(
                         R.string.upcoming,
                         movies.map {
@@ -76,20 +82,21 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     )
                 )
                 binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
-            }
-            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString())
-            }
-        })
+                },
+                {
+                        error ->
+                    Log.e("TAG", error.toString())
+                }
+            )
 
         val callRecommended = MovieApiClient.apiClient.getNowPlayingMovies(API_KEY, "ru")
-        callRecommended.enqueue(object : retrofit2.Callback<MoviesResponse> {
-            override fun onResponse(
-                call: Call<MoviesResponse>,
-                response: Response<MoviesResponse>
-            ) {
-                val movies = response.body()!!.results
+        callRecommended
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                        it ->
+                    val movies = it.results
                 // Передаем результат в adapter и отображаем элементы
                 moviesListRecommended = listOf(
                     MainCardContainer(
@@ -104,12 +111,19 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     )
                 )
                 binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesListRecommended) }
-            }
-            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString())
-            }
-        })
+                },
+                {
+                        error ->
+                    Log.e("TAG", error.toString())
+                }
+            )
+
+        val obserOne = io.reactivex.Observable.just(call)
+        val obserTwo = io.reactivex.Observable.just(callRecommended)
+        val zipper = BiFunction<Single<MoviesResponse>, Single<MoviesResponse>, String> {
+            first, second -> first.toString() + second.toString()
+        }
+        
 
         searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
             Timber.d(it.toString())
@@ -117,6 +131,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                 openSearch(it.toString())
             }
         }
+
+
     }
 
     private fun openMovieDetails(movie: MovieModel) {

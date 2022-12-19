@@ -79,4 +79,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.interceptorVersion"
+
+    //RxJava
+    implementation "io.reactivex.rxjava2:rxjava:2.2.17"
+// RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+// Для использования RxJava c Retrofit
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.7.1"
 }

@@ -4,8 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.SearchToolbarBinding
 
@@ -16,7 +20,16 @@ class SearchBar @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyle) {
 
     lateinit var binding: SearchToolbarBinding
-
+    val editText: EditText by lazy {
+        findViewById(R.id.search_edit_text)
+    }
+    val onTextChangeObservable by lazy {
+        Observable.create(ObservableOnSubscribe<String> { sub ->
+            editText.doAfterTextChanged { text ->
+                sub.onNext(text.toString())
+            }
+        })
+    }
     private var hint: String = ""
     private var isCancelVisible: Boolean = true
 
