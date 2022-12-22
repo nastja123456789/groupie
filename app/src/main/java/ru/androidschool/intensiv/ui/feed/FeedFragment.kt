@@ -119,7 +119,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         bundle.putString(OVERVIEW, movie.overview)
         bundle.putString(RELEASE, movie.releaseDate)
         bundle.putInt(RATING, movie.voteAverage!!.toInt())
-
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
 
