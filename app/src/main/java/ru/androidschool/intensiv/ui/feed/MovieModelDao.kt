@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface MovieModelDao {
     @Query("SELECT * from movie_db ORDER BY title ASC")
-    fun getAllMovies() : LiveData<List<MovieModelDB>>
+    fun getAllMovies() : List<MovieModelDB>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(movieModelDB: MovieModelDB)
 }

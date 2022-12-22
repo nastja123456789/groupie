@@ -15,13 +15,15 @@ import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
 import ru.androidschool.intensiv.databinding.ActivityMainBinding.inflate
 import ru.androidschool.intensiv.ui.feed.MovieModelDB
-import ru.androidschool.intensiv.ui.feed.MovieViewModel
+import ru.androidschool.intensiv.ui.feed.MovieModelDao
+import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
 
 
 class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
@@ -33,7 +35,8 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
     // onDestroyView.
     private val binding get() = _binding!!
     private val searchBinding get() = _searchBinding!!
-    private val viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+   // private val viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+//    private val db = MovieDB
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,9 +65,17 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
             if (tr == false) {
                 binding.likeImage.setImageResource(R.drawable.ic_heart)
                 tr = true
-                lifecycleScope.launch {
-                    viewModel.repository.insert(MovieModelDB(title!!))
+//                lifecycleScope.launch {
+//                    viewModel.repository.insert(MovieModelDB(title!!))
+//                }
+                //lifecycleScope.launch{
+                lifecycleScope.launch(Dispatchers.IO) {
+                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().insert(MovieModelDB(title!!))
+                    Log.e("added","added")
                 }
+
+                //}
+
             } else {
                 binding.likeImage.setImageResource(R.drawable.ic_like)
                 tr = false
