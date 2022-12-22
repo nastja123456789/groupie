@@ -20,12 +20,10 @@ class SearchBar @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyle) {
 
     lateinit var binding: SearchToolbarBinding
-    val editText: EditText by lazy {
-        findViewById(R.id.search_edit_text)
-    }
+
     val onTextChangeObservable by lazy {
         Observable.create(ObservableOnSubscribe<String> { sub ->
-            editText.doAfterTextChanged { text ->
+            binding.searchEditText.doAfterTextChanged { text ->
                 sub.onNext(text.toString())
             }
         })

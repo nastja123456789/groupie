@@ -1,5 +1,6 @@
 package ru.androidschool.intensiv.ui.feed
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
@@ -10,13 +11,13 @@ interface MovieApiInterface {
     fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ) : Single<MoviesResponse>
+    ) : Observable<MoviesResponse>
 
     @GET("movie/now_playing")
     fun getNowPlayingMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ) : Single<MoviesResponse>
+    ) : Observable<MoviesResponse>
 
     @GET("tv/popular")
     fun getPopularTV(

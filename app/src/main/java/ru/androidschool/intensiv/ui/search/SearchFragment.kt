@@ -16,6 +16,7 @@ import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.databinding.FragmentSearchBinding
+import ru.androidschool.intensiv.ui.feed.Extension
 import ru.androidschool.intensiv.ui.feed.FeedFragment
 import ru.androidschool.intensiv.ui.feed.FeedFragment.Companion.KEY_SEARCH
 import ru.androidschool.intensiv.ui.feed.MovieApiClient
@@ -48,16 +49,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val searchTerm = requireArguments().getString(KEY_SEARCH)
-        //searchBinding.searchToolbar.setText(searchTerm)
+        val searchTerm = requireArguments().getString(KEY_SEARCH)
+        searchBinding.searchToolbar.setText(searchTerm)
         searchBinding
             .searchToolbar
             .onTextChangeObservable
             .map { it.trim() }
             .debounce(500, TimeUnit.MILLISECONDS)
             .filter { it.isNotEmpty() }
-            .observeOn(Schedulers.io())
-            .flatMapSingle { it -> MovieApiClient.apiClient.searchByQuery(FeedFragment.API_KEY, "ru", it) }
+            .flatMapSingle { it -> MovieApiClient.apiClient.searchByQuery(Extension.API_KEY, Extension.language, it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 setMovies(it.results)
@@ -68,7 +68,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     fun setMovies(movies: List<MovieModel>) {
-        binding.moviesRecyclerView.adapter = SearchMoviesAdapter(movies, 1)
+        binding.moviesRecyclerView.adapter = SearchMoviesAdapter(movies, R.layout.list_item_movie)
     }
 
     override fun onDestroyView() {

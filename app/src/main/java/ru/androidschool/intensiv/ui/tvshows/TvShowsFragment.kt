@@ -35,7 +35,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = GroupAdapter<GroupieViewHolder>()
 
-        val call = MovieApiClient.apiClient.getPopularTV(FeedFragment.API_KEY, "ru")
+        val call = MovieApiClient.apiClient.getPopularTV(Extension.API_KEY, Extension.language)
         call
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -53,14 +53,6 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
                     Log.e("TAG", error.toString())
                 }
             )
-//                val movies = response.body()!!.results
-//                // Передаем результат в adapter и отображаем элементы
-//                moviesList = movies.map {
-//                    movieModel -> Movie(movieModel)
-//                }.toList()
-//                binding.movieRV.adapter = adapter.apply { addAll(moviesList) }
-
-
     }
 
     override fun onDestroyView() {
