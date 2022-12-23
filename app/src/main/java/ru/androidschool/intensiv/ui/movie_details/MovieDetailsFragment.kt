@@ -1,5 +1,6 @@
 package ru.androidschool.intensiv.ui.movie_details
 
+import MovieViewModel
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
 import androidx.core.content.res.ComplexColorCompat.inflate
 import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
@@ -30,13 +32,12 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
     private var _binding: MovieDetailsFragmentBinding? = null
     private var _searchBinding: MovieDetailsFragmentBinding? = null
+    private val vm: MovieViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     private val searchBinding get() = _searchBinding!!
-   // private val viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
-//    private val db = MovieDB
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,25 +61,20 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         binding.ageOfRealise.text = release.toString()
         var rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
-        var tr = false
+        vm.setLike(false)
         binding.likeImage.setOnClickListener {
-            if (tr == false) {
+            if (vm.hasLike.value == false) {
                 binding.likeImage.setImageResource(R.drawable.ic_heart)
-                tr = true
-//                lifecycleScope.launch {
-//                    viewModel.repository.insert(MovieModelDB(title!!))
-//                }
-                //lifecycleScope.launch{
+                vm.setLike(true)
                 lifecycleScope.launch(Dispatchers.IO) {
-                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().insert(MovieModelDB(title!!))
-                    Log.e("added","added")
+                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().insert(MovieModelDB(image!!))
                 }
-
-                //}
-
             } else {
                 binding.likeImage.setImageResource(R.drawable.ic_like)
-                tr = false
+                vm.setLike(false)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().delete(MovieModelDB(image!!))
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(MovieModelDB::class), version = 1, exportSchema = false)
-public abstract class MovieRoomDatabase : RoomDatabase() {
+abstract class MovieRoomDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieModelDao
     companion object {
         // Используется паттерн синглтон для одного экземпляра класса базы данных
@@ -21,7 +21,7 @@ public abstract class MovieRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MovieRoomDatabase::class.java,
-                    "movie_db"
+                    "movie"
                 ).build()
                 INSTANCE = instance
                 return instance

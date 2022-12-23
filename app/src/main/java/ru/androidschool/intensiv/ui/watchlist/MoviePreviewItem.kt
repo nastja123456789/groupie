@@ -16,14 +16,14 @@ class MoviePreviewItem(
     override fun getLayout() = R.layout.item_small
 
     override fun bind(view: ItemSmallBinding, position: Int) {
-        view.titleView.text = content.title
+//        view.titleView.text = content.title
 //        view.imagePreview.setOnClickListener {
 //            onClick.invoke(content)
 //        }
         // TODO Получать из модели
-//        Picasso.get()
-//            .load("https://www.kinopoisk.ru/images/film_big/1143242.jpg")
-//            .into(view.imagePreview)
+        Picasso.get()
+            .load(content.title)
+            .into(view.imagePreview)
     }
 
     override fun initializeViewBinding(v: View): ItemSmallBinding = ItemSmallBinding.bind(v)

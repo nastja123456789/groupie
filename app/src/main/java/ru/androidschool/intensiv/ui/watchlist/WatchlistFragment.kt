@@ -54,10 +54,8 @@ class WatchlistFragment : Fragment() {
                         it
                     ) { movie ->  }
                 }.toList()
-
             binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
         }
-
     }
 
     override fun onDestroyView() {
