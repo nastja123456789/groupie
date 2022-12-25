@@ -3,7 +3,6 @@
     package="ru.androidschool.intensiv">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name="ru.androidschool.intensiv.MovieFinderApp"
         android:allowBackup="true"

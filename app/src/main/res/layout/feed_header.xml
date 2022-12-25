@@ -64,6 +64,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/material_margin_large"
                             android:background="@drawable/list_background" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/movies_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 

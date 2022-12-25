@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/detailImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/height_200"
         android:src="@drawable/aqman"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,93 +17,50 @@
 
     <TextView
         android:id="@+id/detailText"
-        android:layout_width="370dp"
-        android:layout_height="40dp"
-        android:text="Aquaman"
-        android:textSize="24dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="@dimen/width_370"
+        android:layout_height="@dimen/height_40"
+        android:text=""
+        android:textSize="@dimen/text_24"
+        android:layout_marginLeft="@dimen/margin"
         app:layout_constraintEnd_toStartOf="@+id/likeImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailImage" />
 
     <ImageView
         android:id="@+id/likeImage"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/close_width"
+        android:layout_height="@dimen/height_40"
         android:src="@drawable/ic_like"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="@dimen/margin_5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailImage" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Смотреть"
+        android:layout_width="@dimen/width_100"
+        android:layout_height="@dimen/height_40"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:text="@string/watch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailText" />
 
-    <ImageView
-        android:id="@+id/star5"
-        android:layout_marginTop="10dp"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_star_5"
-        app:layout_constraintEnd_toStartOf="@+id/star1"
-        app:layout_constraintTop_toBottomOf="@+id/detailText" />
-
-    <ImageView
-        android:id="@+id/star4"
-        android:layout_marginTop="10dp"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_star_5"
-        app:layout_constraintEnd_toStartOf="@+id/star3"
-        app:layout_constraintTop_toBottomOf="@+id/detailText" />
-
-    <ImageView
-        android:id="@+id/star3"
-        android:layout_marginTop="10dp"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_star_5"
-        app:layout_constraintEnd_toStartOf="@+id/star2"
-        app:layout_constraintTop_toBottomOf="@+id/detailText" />
-
-    <ImageView
-        android:id="@+id/star2"
-        android:layout_width="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_star_1"
-        android:layout_marginRight="10dp"
+    <RatingBar
+        android:id="@+id/movie_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailText" />
-
-    <ImageView
-        android:id="@+id/star1"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_star_5"
-        app:layout_constraintEnd_toStartOf="@+id/star4"
         app:layout_constraintTop_toBottomOf="@+id/detailText" />
 
     <TextView
         android:id="@+id/detailDescription"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="Aquaman is a superhero appearing in American comic books published by DC Comics.
-        Created by Paul Norris and Mort Weisinger, the character debuted in More Fun Comics #73 (November 1941).
-        The character is a pastiche of Namor. Initially a backup feature in DC's anthology titles,
-        Aquaman later starred in several volumes of a solo comic book series. During the late 1950s and 1960s superhero-revival period known
-         as the Silver Age, he was a founding member of the Justice League. In the 1990s Modern Age, writers interpreted Aquaman's character
-         more seriously, with storylines depicting the weight of his role as king of Atlantis.
-         Aquaman's villains include his archenemy Black Manta and his own half-brother Ocean Master, among others."
+        android:layout_height="@dimen/height_250"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -111,11 +68,11 @@
 
     <LinearLayout
         android:id="@+id/actorDetail1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
         android:orientation="vertical"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailDescription"
         app:layout_constraintEnd_toStartOf="@id/actorDetail2"
@@ -136,14 +93,14 @@
 
     <LinearLayout
         android:id="@+id/actorDetail2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
         android:orientation="vertical"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         app:layout_constraintTop_toBottomOf="@+id/detailDescription"
         app:layout_constraintEnd_toStartOf="@id/actorDetail3"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="@dimen/margin"
         >
 
         <ImageView
@@ -156,19 +113,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Aquaman"/>
+            android:text=""/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/actorDetail3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
         android:orientation="vertical"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         app:layout_constraintEnd_toStartOf="@+id/actorDetail4"
         app:layout_constraintTop_toBottomOf="@+id/detailDescription"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="@dimen/close_width"
         >
 
         <ImageView
@@ -186,13 +143,13 @@
 
     <LinearLayout
         android:id="@+id/actorDetail4"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
+        android:layout_marginTop="@dimen/margin"
         android:orientation="vertical"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/margin"
         app:layout_constraintTop_toBottomOf="@+id/detailDescription">
 
         <ImageView
@@ -209,14 +166,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:id="@+id/addition1"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="@dimen/close_width"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actorDetail1">
@@ -225,25 +182,25 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:text="Жанр"/>
+            android:text="@string/janr"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Action"
+            android:text="@string/action"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:id="@+id/addition2"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addition1">
@@ -252,12 +209,13 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:text="Год релиза"/>
+            android:text="@string/ageOfRelease"/>
 
         <TextView
+            android:id="@+id/ageOfRealise"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="2018"
+            android:text=""
             android:layout_height="match_parent"/>
 
     </LinearLayout>

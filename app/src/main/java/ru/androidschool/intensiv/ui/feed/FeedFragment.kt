@@ -1,15 +1,16 @@
 package ru.androidschool.intensiv.ui.feed
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
-import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.ui.afterTextChanged
@@ -38,6 +39,9 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         }
     }
 
+    var popularMovie = listOf<MovieModel>()
+    var ratedMovies = listOf<MovieModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,50 +54,72 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        binding.progressBarWaitForResult.visibility = View.VISIBLE
+        binding.moviesRecyclerView.visibility = View.INVISIBLE
+        val ratedMovie = MovieApiClient.apiClient.getTopRatedMovies(Extension.API_KEY,Extension.language)
+        val playMovie = MovieApiClient.apiClient.getNowPlayingMovies(Extension.API_KEY, Extension.language)
+        io.reactivex.Observable.zip(
+            ratedMovie,
+            playMovie,
+            io.reactivex.functions.BiFunction<MoviesResponse, MoviesResponse, CommonFeedQuery> {
+                    ratedMovie, playMovie ->
+                return@BiFunction CommonFeedQuery(ratedMovie, playMovie)
+            }
+        ).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    data ->
+                    popularMovie = data.play.results
+                    ratedMovies = data.rat.results
+                    ratedMovies?.let { it ->
+                        val ratedMovies  = listOf(
+                            MainCardContainer(
+                                R.string.upcoming,
+                                ratedMovies.map { it2 ->
+                                    MovieItem(it2!!) {movie ->
+                                        openMovieDetails(movie)
+                                    }
+                                }.toList()
+                            )
+                        )
+                        binding.moviesRecyclerView.adapter = adapter.apply { addAll(ratedMovies) }
+                    }
+                    popularMovie?.let { it ->
+                        val popularMovie  = listOf(
+                            MainCardContainer(
+                                R.string.recommended,
+                                popularMovie.map { it2 ->
+                                    MovieItem(it2!!) {movie ->
+                                        openMovieDetails(movie)
+                                    }
+                                }.toList()
+                            )
+                        )
+                        binding.moviesRecyclerView.adapter = adapter.apply { addAll(popularMovie) }
+                    }
+                    binding.moviesRecyclerView.visibility = View.VISIBLE
+                    binding.progressBarWaitForResult.visibility = View.INVISIBLE
+                }, {
+                    error -> Log.e("TAG", error.toString())
+                }
+            )
         searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
             Timber.d(it.toString())
             if (it.toString().length > MIN_LENGTH) {
                 openSearch(it.toString())
             }
         }
-
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-        val moviesList = listOf(
-            MainCardContainer(
-                R.string.recommended,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(
-                            movie
-                        )
-                    }
-                }.toList()
-            )
-        )
-
-        binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
-
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-        // Чтобы отобразить второй ряд фильмов
-        val newMoviesList = listOf(
-            MainCardContainer(
-                R.string.upcoming,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(movie)
-                    }
-                }.toList()
-            )
-        )
-
-        adapter.apply { addAll(newMoviesList) }
     }
 
-    private fun openMovieDetails(movie: Movie) {
+    private fun openMovieDetails(movie: MovieModel) {
         val bundle = Bundle()
         bundle.putString(KEY_TITLE, movie.title)
+        bundle.putString(IMAGE, movie.posterPath)
+        bundle.putString(OVERVIEW, movie.overview)
+        bundle.putString(RELEASE, movie.releaseDate)
+        bundle.putInt(RATING, movie.voteAverage!!.toInt())
+
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
 
@@ -106,6 +132,11 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
     override fun onStop() {
         super.onStop()
         searchBinding.searchToolbar.clear()
+        adapter.apply {
+            binding.moviesRecyclerView.adapter = adapter.apply { removeGroup(0) }
+            binding.moviesRecyclerView.adapter = adapter.apply { removeGroup(0) }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -122,5 +153,9 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         const val MIN_LENGTH = 3
         const val KEY_TITLE = "title"
         const val KEY_SEARCH = "search"
+        const val IMAGE = "image"
+        const val OVERVIEW = "overview"
+        const val RELEASE = "release"
+        const val RATING = "rating"
     }
 }
