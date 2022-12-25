@@ -105,7 +105,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                 }
             )
         searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
-            Timber.d(it.toString())
+            //Timber.d(it.toString())
             if (it.toString().length > MIN_LENGTH) {
                 openSearch(it.toString())
             }
@@ -119,7 +119,6 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         bundle.putString(OVERVIEW, movie.overview)
         bundle.putString(RELEASE, movie.releaseDate)
         bundle.putInt(RATING, movie.voteAverage!!.toInt())
-
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
 

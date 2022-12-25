@@ -20,6 +20,9 @@ class Movie(
         Picasso.get()
             .load(content.posterPath)
             .into(viewHolder.itemView.findViewById<ImageView>(R.id.movieImage))
+//        viewHolder.itemView.findViewById<ImageView>(R.id.likeImage).setOnClickListener {
+//            Log.e("the end","the end")
+//        }
     }
     override fun getLayout(): Int = R.layout.movie_detail_image_fragment
 }
