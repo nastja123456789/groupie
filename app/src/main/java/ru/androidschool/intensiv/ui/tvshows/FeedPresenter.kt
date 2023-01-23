@@ -1,9 +1,9 @@
 package ru.androidschool.intensiv.ui.feed
 
 import android.annotation.SuppressLint
-import ru.androidschool.intensiv.domain.TopRatedMoviesUseCase
-import ru.androidschool.intensiv.ui.base.BasePresenter
+import ru.androidschool.intensiv.ui.tvshows.base.BasePresenter
 import timber.log.Timber
+import ru.androidschool.intensiv.domain.TopRatedMoviesUseCase
 
 class FeedPresenter(private val useCase: TopRatedMoviesUseCase):
 BasePresenter<FeedPresenter.FeedView>(){
@@ -23,7 +23,7 @@ BasePresenter<FeedPresenter.FeedView>(){
             )
     }
     interface FeedView {
-        fun showMovies(movies: List<MovieModel>)
+        fun showMovies(movies: List<TVModel>)
         fun showLoading()
         fun hideLoading()
         fun showEmptyMovies()

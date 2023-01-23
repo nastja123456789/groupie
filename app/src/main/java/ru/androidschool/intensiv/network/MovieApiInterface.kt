@@ -14,7 +14,7 @@ interface MovieApiInterface {
     fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ) : Single<MoviesResponse>
+    ) : Observable<MoviesResponse>
 
     @GET("movie/now_playing")
     fun getNowPlayingMovies(
