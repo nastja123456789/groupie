@@ -1,23 +1,17 @@
 package ru.androidschool.intensiv.ui.watchlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.map
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.room.RoomDatabase
-import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.androidschool.intensiv.data.MockRepository
 import ru.androidschool.intensiv.databinding.FragmentWatchlistBinding
-import ru.androidschool.intensiv.ui.feed.MovieModelDB
 import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
 
 class WatchlistFragment : Fragment() {

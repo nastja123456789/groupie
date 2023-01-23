@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.data.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

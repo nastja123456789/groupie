@@ -13,9 +13,10 @@ import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
-import ru.androidschool.intensiv.network.MovieApiClient
+import ru.androidschool.intensiv.data.network.MovieApiClient
+import ru.androidschool.intensiv.data.vo.MovieModel
+import ru.androidschool.intensiv.data.vo.MoviesResponse
 import ru.androidschool.intensiv.ui.afterTextChanged
-import timber.log.Timber
 
 class FeedFragment : Fragment(R.layout.feed_fragment){
 

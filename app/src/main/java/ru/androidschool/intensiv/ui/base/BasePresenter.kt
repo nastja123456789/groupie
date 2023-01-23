@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.ui.tvshows.base
+package ru.androidschool.intensiv.ui.base
 
 abstract class BasePresenter<V> {
     protected var view: V? = null

@@ -1,4 +1,6 @@
-package ru.androidschool.intensiv.data
+package ru.androidschool.intensiv.domain.repository
+
+import ru.androidschool.intensiv.data.vo.Movie
 
 object MockRepository {
 

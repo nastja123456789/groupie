@@ -1,14 +1,12 @@
 package ru.androidschool.intensiv.ui.tvshows
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import coil.api.load
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.ui.feed.TVModel
+import ru.androidschool.intensiv.data.vo.TVModel
 
 class Movie(
     private val content: TVModel,

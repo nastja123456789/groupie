@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.data.vo
 
 import com.google.gson.annotations.SerializedName
 

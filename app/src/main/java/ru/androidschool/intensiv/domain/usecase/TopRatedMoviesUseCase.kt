@@ -1,11 +1,9 @@
-package ru.androidschool.intensiv.domain
+package ru.androidschool.intensiv.domain.usecase
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import ru.androidschool.intensiv.applySchedulers
-import ru.androidschool.intensiv.data.repository.TopRatedMoviesRemoteRepository
-import ru.androidschool.intensiv.ui.feed.MovieModel
-import ru.androidschool.intensiv.ui.feed.TVModel
+import ru.androidschool.intensiv.domain.repository.TopRatedMoviesRemoteRepository
+import ru.androidschool.intensiv.data.vo.TVModel
 
 class TopRatedMoviesUseCase(private val repository: TopRatedMoviesRemoteRepository) {
     fun getMovies():Single<List<TVModel>> {

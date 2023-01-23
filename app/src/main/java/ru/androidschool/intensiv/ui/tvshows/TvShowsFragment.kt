@@ -1,8 +1,6 @@
 package ru.androidschool.intensiv.ui.tvshows
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
-import retrofit2.Response
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.repository.TopRatedMoviesRemoteRepository
+import ru.androidschool.intensiv.data.vo.TVModel
+import ru.androidschool.intensiv.domain.repository.TopRatedMoviesRemoteRepository
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
-import ru.androidschool.intensiv.domain.TopRatedMoviesUseCase
-import ru.androidschool.intensiv.network.MovieApiClient
+import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
 import ru.androidschool.intensiv.ui.feed.*
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.FeedView {
