@@ -32,5 +32,5 @@ interface MovieApiInterface {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("query") query: String
-    ) : Single<MoviesResponse>
+    ) : MoviesResponse
 }

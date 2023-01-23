@@ -40,24 +40,6 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.Feed
         binding.movieRV.adapter = adapter.apply { addAll(listOf()) }
         presenter.getMovies()
         binding.movieRV.adapter = adapter.apply { addAll(moviesList) }
-//        val call = MovieApiClient.apiClient.getPopularTV(Extension.API_KEY, Extension.language)
-//        call
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(
-//                {
-//                        it ->
-//                    val movies = it.results
-//                    moviesList = movies.map {
-//                        moviesModel -> Movie(moviesModel)
-//                    }.toList()
-//                    binding.movieRV.adapter = adapter.apply { addAll(moviesList) }
-//                },
-//                {
-//                    error ->
-//                    Log.e("TAG", error.toString())
-//                }
-//            )
     }
 
     override fun onDestroyView() {

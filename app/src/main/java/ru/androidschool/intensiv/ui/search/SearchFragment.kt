@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
@@ -16,6 +19,7 @@ import ru.androidschool.intensiv.data.network.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.Extension
 import ru.androidschool.intensiv.ui.feed.FeedFragment.Companion.KEY_SEARCH
 import ru.androidschool.intensiv.data.vo.MovieModel
+import ru.androidschool.intensiv.domain.repository.SearchRepository
 import java.util.concurrent.TimeUnit
 
 class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search), Parcelable {
@@ -27,6 +31,8 @@ class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search
     // onDestroyView.
     private val binding get() = _binding!!
     private val searchBinding get() = _searchBinding!!
+
+    private lateinit var searchViewModel: SearchFragmentViewModel
 
     val editText: EditText by lazy {
         searchBinding.searchToolbar.findViewById(R.id.search_edit_text)
@@ -49,6 +55,9 @@ class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchTerm = requireArguments().getString(KEY_SEARCH)
+        val searchModelFactory = SearchFragmentModelFactory(SearchRepository())
+        searchViewModel = ViewModelProvider(this, searchModelFactory).get(SearchFragmentViewModel::class.java)
+
         searchBinding.searchToolbar.setText(searchTerm)
         searchBinding
             .searchToolbar
@@ -56,10 +65,12 @@ class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search
             .map { it.trim() }
             .debounce(500, TimeUnit.MILLISECONDS)
             .filter { it.isNotEmpty() }
-            .flatMapSingle { it -> MovieApiClient.apiClient.searchByQuery(Extension.API_KEY, Extension.language, it) }
+//            .flatMapSingle { it -> searchViewModel.searchByQuery(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                setMovies(it.results)
+                searchViewModel.searchMoviesLiveData.observe(viewLifecycleOwner) { list ->
+                    setMovies(list)
+                }
                 Log.d("Tag", it.toString())
             }, {
                 Log.e("Tag", it.toString())
@@ -94,3 +105,4 @@ class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search
         }
     }
 }
+
