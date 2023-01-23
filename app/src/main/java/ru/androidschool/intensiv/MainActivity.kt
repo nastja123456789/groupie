@@ -12,7 +12,6 @@ import retrofit2.Call
 import retrofit2.Response
 import ru.androidschool.intensiv.databinding.ActivityMainBinding
 import ru.androidschool.intensiv.ui.feed.FeedFragment
-import ru.androidschool.intensiv.ui.feed.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.MoviesResponse
 
 class MainActivity : AppCompatActivity() {

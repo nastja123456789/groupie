@@ -15,6 +15,7 @@ import retrofit2.Call
 import retrofit2.Response
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
+import ru.androidschool.intensiv.network.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.*
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
