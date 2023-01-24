@@ -41,8 +41,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
         }
     }
 
-    var popularMovie = listOf<MovieModel>()
-    var ratedMovies = listOf<MovieModel>()
+    private var popularMovie = listOf<MovieModel>()
+    private var ratedMovies = listOf<MovieModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,12 +74,12 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
                     data ->
                     popularMovie = data.play.results
                     ratedMovies = data.rat.results
-                    ratedMovies?.let { it ->
+                    ratedMovies.let {
                         val ratedMovies  = listOf(
                             MainCardContainer(
                                 R.string.upcoming,
                                 ratedMovies.map { it2 ->
-                                    MovieItem(it2!!) {movie ->
+                                    MovieItem(it2) {movie ->
                                         openMovieDetails(movie)
                                     }
                                 }.toList()
@@ -87,12 +87,12 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
                         )
                         binding.moviesRecyclerView.adapter = adapter.apply { addAll(ratedMovies) }
                     }
-                    popularMovie?.let { it ->
+                    popularMovie.let {
                         val popularMovie  = listOf(
                             MainCardContainer(
                                 R.string.recommended,
                                 popularMovie.map { it2 ->
-                                    MovieItem(it2!!) {movie ->
+                                    MovieItem(it2) {movie ->
                                         openMovieDetails(movie)
                                     }
                                 }.toList()

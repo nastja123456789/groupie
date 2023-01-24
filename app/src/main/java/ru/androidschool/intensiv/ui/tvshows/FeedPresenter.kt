@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.ui.tvshows
 
 import android.annotation.SuppressLint
 import ru.androidschool.intensiv.data.vo.TVModel

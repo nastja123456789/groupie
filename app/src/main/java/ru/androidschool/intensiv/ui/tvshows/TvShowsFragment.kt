@@ -13,7 +13,6 @@ import ru.androidschool.intensiv.data.vo.TVModel
 import ru.androidschool.intensiv.domain.repository.TopRatedMoviesRemoteRepository
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
 import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
-import ru.androidschool.intensiv.ui.feed.*
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.FeedView {
     private var _binding: TvShowsFragmentBinding? = null

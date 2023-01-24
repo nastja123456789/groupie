@@ -1,6 +1,6 @@
 package ru.androidschool.intensiv.ui.movie_details
 
-import MovieViewModel
+import ru.androidschool.intensiv.ui.feed.MovieViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
 import ru.androidschool.intensiv.data.dto.MovieModelDB
-import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
+import ru.androidschool.intensiv.data.dto.MovieRoomDatabase
 
 
 class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
@@ -40,15 +40,15 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var title = arguments?.getString("title")
+        val title = arguments?.getString("title")
         binding.detailText.text = title.toString()
-        var image = arguments?.getString("image")
+        val image = arguments?.getString("image")
         binding.detailImage.load(image)
-        var overview = arguments?.getString("overview")
+        val overview = arguments?.getString("overview")
         binding.detailDescription.text = overview.toString()
-        var release = arguments?.getString("release")
+        val release = arguments?.getString("release")
         binding.ageOfRealise.text = release.toString()
-        var rating = arguments?.getInt("rating")
+        val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
         vm.setLike(false)
         binding.likeImage.setOnClickListener {

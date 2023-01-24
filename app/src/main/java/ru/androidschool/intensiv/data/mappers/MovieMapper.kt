@@ -2,10 +2,8 @@ package ru.androidschool.intensiv.data.mappers
 
 import ru.androidschool.intensiv.data.dto.MovieModelDB
 import ru.androidschool.intensiv.data.vo.MovieModel
-import ru.androidschool.intensiv.data.vo.MoviesResponse
 import ru.androidschool.intensiv.data.vo.TVModel
 import ru.androidschool.intensiv.data.vo.TVResponse
-import ru.androidschool.intensiv.ui.tvshows.Movie
 import ru.androidschool.intensiv.data.vo.Movie as movie
 
 object MovieMapper {

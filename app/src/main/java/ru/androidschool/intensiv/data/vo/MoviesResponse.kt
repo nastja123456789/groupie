@@ -1,7 +1,6 @@
 package ru.androidschool.intensiv.data.vo
 
 import com.google.gson.annotations.SerializedName
-import ru.androidschool.intensiv.data.vo.MovieModel
 
 data class MoviesResponse(
     var page: Int,
