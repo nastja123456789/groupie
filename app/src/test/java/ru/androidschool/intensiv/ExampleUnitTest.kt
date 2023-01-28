@@ -2,6 +2,8 @@ package ru.androidschool.intensiv
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.androidschool.intensiv.data.dto.MovieModelDB
+import ru.androidschool.intensiv.data.mappers.MovieMapper
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -9,6 +11,14 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    @Test
+    fun mapperToView() {
+        val movie = MovieMapper.toView(
+            movieModelDB = MovieModelDB(1, "новость")
+        )
+        assertEquals(movie.title, "новость")
+    }
+
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)

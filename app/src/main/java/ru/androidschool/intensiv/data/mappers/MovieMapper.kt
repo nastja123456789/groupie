@@ -10,10 +10,12 @@ object MovieMapper {
     fun toValueObject(list: TVResponse): List<TVModel> {
         return list.results
     }
-    fun fromMovieDBtoMovie(movieModelDB: MovieModelDB): movie = movie(
+
+    fun toView(movieModelDB: MovieModelDB): movie = movie(
         title = movieModelDB.title,
         voteAverage = 0.0
     )
+
     fun fromMovieDBtoMovieModel(movieModelDB: MovieModelDB):MovieModel = MovieModel(
         title = movieModelDB.title,
         voteAverage = 0.0,
