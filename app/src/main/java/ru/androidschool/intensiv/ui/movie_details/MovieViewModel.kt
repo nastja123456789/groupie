@@ -34,9 +34,4 @@ class MovieViewModel : ViewModel() {
             MovieRoomDatabase.getDatabase(context).movieDao().exists(id)
         }
     }
-    fun existing(context: Context, id: Int) {
-        viewModelScope.launch {
-            exist(context, id)
-        }
-    }
 }

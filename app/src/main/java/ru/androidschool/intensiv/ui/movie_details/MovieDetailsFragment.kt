@@ -65,13 +65,11 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
                     if (id != null) {
                         vm.setImage(requireContext(), image!!, id)
                     }
-                    Log.d("${tf}","insertinsert")
                 } else if (tf){
                     binding.likeImage.setImageResource(R.drawable.ic_like)
                     if (id != null) {
                         vm.deleteImage(requireContext(), image!!, id)
                     }
-                    Log.d("${tf}","insertinsert")
                 }
             }
         }
