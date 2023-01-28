@@ -46,7 +46,9 @@ class WatchlistFragment : Fragment() {
                 MovieRoomDatabase.getDatabase(requireContext()).movieDao().getAllMovies().map {
                     MoviePreviewItem(
                         it
-                    ) { }
+                    ) {
+
+                    }
                 }.toList()
             binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
         }

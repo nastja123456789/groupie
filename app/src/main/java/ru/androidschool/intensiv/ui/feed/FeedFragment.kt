@@ -80,7 +80,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
                                 R.string.upcoming,
                                 ratedMovies.map { it2 ->
                                     MovieItem(it2) {movie ->
-                                        openMovieDetails(movie)
+                                        val id = ratedMovies.indexOf(movie)
+                                        openMovieDetails(movie, id)
                                     }
                                 }.toList()
                             )
@@ -93,7 +94,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
                                 R.string.recommended,
                                 popularMovie.map { it2 ->
                                     MovieItem(it2) {movie ->
-                                        openMovieDetails(movie)
+                                        val id = ratedMovies.indexOf(movie)
+                                        openMovieDetails(movie, id)
                                     }
                                 }.toList()
                             )
@@ -114,8 +116,9 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
         }
     }
 
-    private fun openMovieDetails(movie: MovieModel) {
+    private fun openMovieDetails(movie: MovieModel, id: Int) {
         val bundle = Bundle()
+        bundle.putInt(ID, id)
         bundle.putString(KEY_TITLE, movie.title)
         bundle.putString(IMAGE, movie.posterPath)
         bundle.putString(OVERVIEW, movie.overview)
@@ -152,6 +155,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
 
     companion object {
         const val MIN_LENGTH = 3
+        const val ID = "ID"
         const val KEY_TITLE = "title"
         const val KEY_SEARCH = "search"
         const val IMAGE = "image"

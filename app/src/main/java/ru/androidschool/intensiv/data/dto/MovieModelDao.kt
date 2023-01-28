@@ -8,10 +8,12 @@ import androidx.room.Query
 
 @Dao
 interface MovieModelDao {
-    @Query("SELECT * from movie ORDER BY title ASC")
+    @Query("SELECT * from Movie ORDER BY title ASC")
     fun getAllMovies() : List<MovieModelDB>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(movieModelDB: MovieModelDB)
     @Delete
     fun delete(movieModelDB: MovieModelDB)
+    @Query("SELECT EXISTS (SELECT 1 FROM Movie WHERE id = :id)")
+    fun exists(id: Int): Boolean
 }

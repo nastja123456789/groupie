@@ -1,7 +1,7 @@
 package ru.androidschool.intensiv.ui.movie_details
 
-import ru.androidschool.intensiv.ui.feed.MovieViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
-import ru.androidschool.intensiv.data.dto.MovieModelDB
-import ru.androidschool.intensiv.data.dto.MovieRoomDatabase
 
 
 class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
@@ -50,19 +48,30 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         binding.ageOfRealise.text = release.toString()
         val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
-        vm.setLike(false)
-        binding.likeImage.setOnClickListener {
-            if (vm.hasLike.value == false) {
+        val id = arguments?.getInt("ID")
+        lifecycleScope.launch(Dispatchers.Default) {
+            val tf: Boolean = id?.let { it1 -> vm.exist(requireContext(), it1) } == true
+            if (tf) {
                 binding.likeImage.setImageResource(R.drawable.ic_heart)
-                vm.setLike(true)
-                lifecycleScope.launch(Dispatchers.IO) {
-                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().insert(MovieModelDB(image!!))
-                }
-            } else {
+            } else if (!tf) {
                 binding.likeImage.setImageResource(R.drawable.ic_like)
-                vm.setLike(false)
-                lifecycleScope.launch(Dispatchers.IO) {
-                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().delete(MovieModelDB(image!!))
+            }
+        }
+        binding.likeImage.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.Default) {
+                val tf: Boolean = id?.let { it1 -> vm.exist(requireContext(), it1) } == true
+                if (!tf) {
+                    binding.likeImage.setImageResource(R.drawable.ic_heart)
+                    if (id != null) {
+                        vm.setImage(requireContext(), image!!, id)
+                    }
+                    Log.d("${tf}","insertinsert")
+                } else if (tf){
+                    binding.likeImage.setImageResource(R.drawable.ic_like)
+                    if (id != null) {
+                        vm.deleteImage(requireContext(), image!!, id)
+                    }
+                    Log.d("${tf}","insertinsert")
                 }
             }
         }

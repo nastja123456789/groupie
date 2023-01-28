@@ -14,12 +14,13 @@ import ru.androidschool.intensiv.domain.repository.TopRatedMoviesRemoteRepositor
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
 import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
 
-class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.FeedView {
+class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), TvShowsPresenter.FeedView {
     private var _binding: TvShowsFragmentBinding? = null
     private val binding get() = _binding!!
     private var moviesList = listOf<Movie>()
-    private val presenter: FeedPresenter by lazy {
-        FeedPresenter(TopRatedMoviesUseCase(TopRatedMoviesRemoteRepository()))
+    private var adapter = GroupAdapter<GroupieViewHolder>()
+    private val presenter: TvShowsPresenter by lazy {
+        TvShowsPresenter(TopRatedMoviesUseCase(TopRatedMoviesRemoteRepository()))
     }
 
     override fun onCreateView(
@@ -33,12 +34,10 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.Feed
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = GroupAdapter<GroupieViewHolder>()
         presenter.attachView(this)
         binding.movieRV.layoutManager = LinearLayoutManager(context)
         binding.movieRV.adapter = adapter.apply { addAll(listOf()) }
         presenter.getMovies()
-        binding.movieRV.adapter = adapter.apply { addAll(moviesList) }
     }
 
     override fun onDestroyView() {
@@ -50,6 +49,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.Feed
         moviesList = movies.map {
                         moviesModel -> Movie(moviesModel)
                     }.toList()
+        binding.movieRV.adapter = adapter.apply { addAll(moviesList) }
     }
 
     override fun showLoading() {
@@ -61,7 +61,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), FeedPresenter.Feed
     }
 
     override fun showEmptyMovies() {
-        TODO("Not yet implemented")
+        moviesList = listOf()
     }
 
     override fun showError() {
