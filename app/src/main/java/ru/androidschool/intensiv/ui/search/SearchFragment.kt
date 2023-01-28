@@ -1,13 +1,14 @@
 package ru.androidschool.intensiv.ui.search
 
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,15 +17,15 @@ import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.databinding.FragmentSearchBinding
+import ru.androidschool.intensiv.network.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.Extension
 import ru.androidschool.intensiv.ui.feed.FeedFragment
 import ru.androidschool.intensiv.ui.feed.FeedFragment.Companion.KEY_SEARCH
-import ru.androidschool.intensiv.ui.feed.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.MovieModel
 import ru.androidschool.intensiv.ui.tvshows.Movie
 import java.util.concurrent.TimeUnit
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search), Parcelable {
 
     private var _binding: FragmentSearchBinding? = null
     private var _searchBinding: FeedHeaderBinding? = null
@@ -37,6 +38,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     val editText: EditText by lazy {
         searchBinding.searchToolbar.findViewById(R.id.search_edit_text)
     }
+
+    constructor(parcel: Parcel) : this() {
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -75,5 +81,23 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onDestroyView()
         _binding = null
         _searchBinding = null
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<SearchFragment> {
+        override fun createFromParcel(parcel: Parcel): SearchFragment {
+            return SearchFragment(parcel)
+        }
+
+        override fun newArray(size: Int): Array<SearchFragment?> {
+            return arrayOfNulls(size)
+        }
     }
 }
