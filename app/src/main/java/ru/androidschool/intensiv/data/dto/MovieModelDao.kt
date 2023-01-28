@@ -1,6 +1,5 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.data.dto
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert

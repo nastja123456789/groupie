@@ -1,11 +1,10 @@
-package ru.androidschool.intensiv.network
+package ru.androidschool.intensiv.data.network
 
-import ru.androidschool.intensiv.ui.feed.MoviesResponse
-import ru.androidschool.intensiv.ui.feed.TVResponse
+import ru.androidschool.intensiv.data.vo.MoviesResponse
+import ru.androidschool.intensiv.data.vo.TVResponse
 
 import io.reactivex.Observable
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,7 +13,7 @@ interface MovieApiInterface {
     fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ) : Single<MoviesResponse>
+    ) : Observable<MoviesResponse>
 
     @GET("movie/now_playing")
     fun getNowPlayingMovies(

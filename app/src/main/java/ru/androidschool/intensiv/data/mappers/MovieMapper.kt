@@ -1,12 +1,10 @@
 package ru.androidschool.intensiv.data.mappers
 
-import io.reactivex.Observable
-import io.reactivex.Single
-import ru.androidschool.intensiv.ui.feed.MovieModel
-import ru.androidschool.intensiv.ui.feed.MoviesResponse
+import ru.androidschool.intensiv.data.vo.TVModel
+import ru.androidschool.intensiv.data.vo.TVResponse
 
 object MovieMapper {
-    fun toValueObject(list: MoviesResponse): List<MovieModel> {
+    fun toValueObject(list: TVResponse): List<TVModel> {
         return list.results
     }
 }

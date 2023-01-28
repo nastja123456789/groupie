@@ -8,21 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.core.widget.doAfterTextChanged
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.databinding.FragmentSearchBinding
-import ru.androidschool.intensiv.network.MovieApiClient
+import ru.androidschool.intensiv.data.network.MovieApiClient
 import ru.androidschool.intensiv.ui.feed.Extension
-import ru.androidschool.intensiv.ui.feed.FeedFragment
 import ru.androidschool.intensiv.ui.feed.FeedFragment.Companion.KEY_SEARCH
-import ru.androidschool.intensiv.ui.feed.MovieModel
-import ru.androidschool.intensiv.ui.tvshows.Movie
+import ru.androidschool.intensiv.data.vo.MovieModel
 import java.util.concurrent.TimeUnit
 
 class SearchFragment() : androidx.fragment.app.Fragment(R.layout.fragment_search), Parcelable {

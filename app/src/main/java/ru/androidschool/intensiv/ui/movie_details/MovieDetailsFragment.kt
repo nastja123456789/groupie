@@ -2,29 +2,18 @@ package ru.androidschool.intensiv.ui.movie_details
 
 import MovieViewModel
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
-import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
-import androidx.core.content.res.ComplexColorCompat.inflate
-import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
-import ru.androidschool.intensiv.databinding.ActivityMainBinding.inflate
-import ru.androidschool.intensiv.ui.feed.MovieModelDB
-import ru.androidschool.intensiv.ui.feed.MovieModelDao
+import ru.androidschool.intensiv.data.dto.MovieModelDB
 import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
 
 

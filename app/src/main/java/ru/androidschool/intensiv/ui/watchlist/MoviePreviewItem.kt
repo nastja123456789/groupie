@@ -4,9 +4,9 @@ import android.view.View
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.Movie
+import ru.androidschool.intensiv.data.vo.Movie
 import ru.androidschool.intensiv.databinding.ItemSmallBinding
-import ru.androidschool.intensiv.ui.feed.MovieModelDB
+import ru.androidschool.intensiv.data.dto.MovieModelDB
 
 class MoviePreviewItem(
     private val content: MovieModelDB,
