@@ -23,6 +23,11 @@ object MovieMapper {
     fun fromMovieToMovieDB(movie: movie):MovieModelDB = MovieModelDB(
         title = movie.title.toString()
     )
+
+    private fun MovieModelDB(title: String): MovieModelDB {
+        return MovieModelDB(title)
+    }
+
     fun fromMovieModelToMovieDB(movieModel: MovieModel): MovieModelDB = MovieModelDB(
         title = movieModel.title.toString()
     )
