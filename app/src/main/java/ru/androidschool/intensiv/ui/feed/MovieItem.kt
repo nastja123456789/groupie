@@ -1,6 +1,7 @@
 package ru.androidschool.intensiv.ui.feed
 
 import android.view.View
+import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.androidschool.intensiv.R
@@ -20,6 +21,7 @@ class MovieItem(
         view.content.setOnClickListener {
             onClick.invoke(content)
         }
+
 
         // TODO Получать из модели
         Picasso.get()
