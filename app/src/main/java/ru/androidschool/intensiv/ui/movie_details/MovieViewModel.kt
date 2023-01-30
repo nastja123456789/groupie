@@ -4,14 +4,15 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.androidschool.intensiv.data.dto.MovieModelDB
 import ru.androidschool.intensiv.data.dto.MovieRoomDatabase
 
 class MovieViewModel : ViewModel() {
-    private val liveHasLike = MutableLiveData<Boolean>()
-    val hasLike: LiveData<Boolean> = liveHasLike
+    private val liveHasLike = MutableLiveData<Boolean?>()
+    val hasLike: MutableLiveData<Boolean?> = liveHasLike
 
     private val liveResId = MutableLiveData<Int>()
 
@@ -23,11 +24,13 @@ class MovieViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().insert(MovieModelDB(id, image))
         }
+        Log.d("olololol","${liveHasLike.value}")
     }
     fun deleteImage(context: Context, image: String, id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().delete(MovieModelDB(id, image))
         }
+        Log.d("olololol","${liveHasLike.value}")
     }
     suspend fun exist(context: Context, id: Int):Boolean {
         return withContext(Dispatchers.IO) {
@@ -37,6 +40,11 @@ class MovieViewModel : ViewModel() {
     fun existing(context: Context, id: Int) {
         viewModelScope.launch {
             exist(context, id)
+        }
+    }
+    fun checkMovie(context: Context, movieId: Int) {
+        viewModelScope.launch(Dispatchers.Main) {
+            liveHasLike.value = exist(context, movieId)
         }
     }
 }

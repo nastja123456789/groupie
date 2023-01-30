@@ -82,11 +82,14 @@ dependencies {
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
-// RxAndroid
+
+    // RxAndroid
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
-// Для использования RxJava c Retrofit
+
+    // Для использования RxJava c Retrofit
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.adapterrxjava"
-//Room
+
+    //Room
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"

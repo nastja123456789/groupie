@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import coil.api.load
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
 
@@ -49,29 +46,18 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
         val id = arguments?.getInt("ID")
-        lifecycleScope.launch(Dispatchers.Default) {
-            val tf: Boolean = id?.let { it1 -> vm.exist(requireContext(), it1) } == true
-            if (tf) {
-                binding.likeImage.setImageResource(R.drawable.ic_heart)
-            } else if (!tf) {
-                binding.likeImage.setImageResource(R.drawable.ic_like)
-            }
+        if (vm.hasLike.value == false) {
+            vm.setLike(true)
+        } else {
+            vm.setLike(false)
         }
         binding.likeImage.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.Default) {
-                val tf: Boolean = id?.let { it1 -> vm.exist(requireContext(), it1) } == true
-                if (!tf) {
-                    binding.likeImage.setImageResource(R.drawable.ic_heart)
-                    if (id != null) {
-                        vm.setImage(requireContext(), image!!, id)
-                    }
-                    Log.d("${tf}","insertinsert")
-                } else if (tf){
-                    binding.likeImage.setImageResource(R.drawable.ic_like)
-                    if (id != null) {
-                        vm.deleteImage(requireContext(), image!!, id)
-                    }
-                    Log.d("${tf}","insertinsert")
+            vm.checkMovie(requireContext(), id!!)
+            vm.hasLike.observe(viewLifecycleOwner) {
+                if (vm.hasLike.value == true) {
+                    vm.deleteImage(requireContext(), image!!, id)
+                } else if (vm.hasLike.value == false){
+                    vm.setImage(requireContext(),image!!, id)
                 }
             }
         }
