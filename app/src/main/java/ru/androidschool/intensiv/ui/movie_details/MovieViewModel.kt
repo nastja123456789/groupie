@@ -24,13 +24,13 @@ class MovieViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().insert(MovieModelDB(id, image))
         }
-        Log.d("olololol","${liveHasLike.value}")
+        Log.d("olololol1","${liveHasLike.value}")
     }
     fun deleteImage(context: Context, image: String, id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().delete(MovieModelDB(id, image))
         }
-        Log.d("olololol","${liveHasLike.value}")
+        Log.d("olololol2","${liveHasLike.value}")
     }
     suspend fun exist(context: Context, id: Int):Boolean {
         return withContext(Dispatchers.IO) {
