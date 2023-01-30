@@ -45,6 +45,7 @@ class MovieViewModel : ViewModel() {
     fun checkMovie(context: Context, movieId: Int) {
         viewModelScope.launch(Dispatchers.Main) {
             liveHasLike.value = exist(context, movieId)
+            setLike(liveHasLike.value!!)
         }
     }
 }

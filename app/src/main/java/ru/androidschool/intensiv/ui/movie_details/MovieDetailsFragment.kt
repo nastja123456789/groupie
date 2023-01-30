@@ -46,11 +46,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
         val id = arguments?.getInt("ID")
-        if (vm.hasLike.value == false) {
-            vm.setLike(true)
-        } else {
-            vm.setLike(false)
-        }
+        binding.likeImage.isChecked = vm.hasLike.value == false
         binding.likeImage.setOnClickListener {
             vm.checkMovie(requireContext(), id!!)
             vm.hasLike.observe(viewLifecycleOwner) {
