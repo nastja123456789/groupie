@@ -1,13 +1,11 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.data.dto
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.androidschool.intensiv.data.dto.MovieModelDB
-import ru.androidschool.intensiv.data.dto.MovieModelDao
 
-@Database(entities = arrayOf(MovieModelDB::class), version = 1, exportSchema = false)
+@Database(entities = [MovieModelDB::class], version = 1, exportSchema = false)
 abstract class MovieRoomDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieModelDao
     companion object {
@@ -23,7 +21,7 @@ abstract class MovieRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MovieRoomDatabase::class.java,
-                    "movie"
+                    "Movie"
                 ).build()
                 INSTANCE = instance
                 return instance

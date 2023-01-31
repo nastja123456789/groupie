@@ -1,13 +1,14 @@
-package ru.androidschool.intensiv.ui.feed
+package ru.androidschool.intensiv.ui.tvshows
 
 import android.annotation.SuppressLint
+import android.util.Log
 import ru.androidschool.intensiv.data.vo.TVModel
 import ru.androidschool.intensiv.ui.base.BasePresenter
 import timber.log.Timber
 import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
 
-class FeedPresenter(private val useCase: TopRatedMoviesUseCase):
-BasePresenter<FeedPresenter.FeedView>(){
+class TvShowsPresenter(private val useCase: TopRatedMoviesUseCase):
+BasePresenter<TvShowsPresenter.FeedView>(){
 
     @SuppressLint("CheckResult")
     fun getMovies() {

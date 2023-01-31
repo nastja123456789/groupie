@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.androidschool.intensiv.R
+import ru.androidschool.intensiv.data.dto.MovieModelDB
 import ru.androidschool.intensiv.data.vo.MovieModel
 
 class SearchMoviesAdapter(

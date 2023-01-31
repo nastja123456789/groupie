@@ -12,7 +12,7 @@ import com.xwray.groupie.GroupieViewHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.databinding.FragmentWatchlistBinding
-import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
+import ru.androidschool.intensiv.data.dto.MovieRoomDatabase
 
 class WatchlistFragment : Fragment() {
 
@@ -46,7 +46,9 @@ class WatchlistFragment : Fragment() {
                 MovieRoomDatabase.getDatabase(requireContext()).movieDao().getAllMovies().map {
                     MoviePreviewItem(
                         it
-                    ) { movie ->  }
+                    ) {
+
+                    }
                 }.toList()
             binding.moviesRecyclerView.adapter = adapter.apply { addAll(moviesList) }
         }

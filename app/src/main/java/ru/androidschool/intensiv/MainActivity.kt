@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         setupBottomNavMenu(navController)
 
-
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

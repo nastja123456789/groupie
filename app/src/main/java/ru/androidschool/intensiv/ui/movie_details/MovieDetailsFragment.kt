@@ -1,20 +1,16 @@
 package ru.androidschool.intensiv.ui.movie_details
 
-import MovieViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import coil.api.load
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
-import ru.androidschool.intensiv.data.dto.MovieModelDB
-import ru.androidschool.intensiv.ui.feed.MovieRoomDatabase
 
 
 class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
@@ -40,31 +36,26 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var title = arguments?.getString("title")
+        val title = arguments?.getString("title")
         binding.detailText.text = title.toString()
-        var image = arguments?.getString("image")
+        val image = arguments?.getString("image")
         binding.detailImage.load(image)
-        var overview = arguments?.getString("overview")
+        val overview = arguments?.getString("overview")
         binding.detailDescription.text = overview.toString()
-        var release = arguments?.getString("release")
+        val release = arguments?.getString("release")
         binding.ageOfRealise.text = release.toString()
-        var rating = arguments?.getInt("rating")
+        val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
-        vm.setLike(false)
-        binding.likeImage.setOnClickListener {
-            if (vm.hasLike.value == false) {
-                binding.likeImage.setImageResource(R.drawable.ic_heart)
-                vm.setLike(true)
-                lifecycleScope.launch(Dispatchers.IO) {
-                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().insert(MovieModelDB(image!!))
-                }
-            } else {
-                binding.likeImage.setImageResource(R.drawable.ic_like)
-                vm.setLike(false)
-                lifecycleScope.launch(Dispatchers.IO) {
-                    MovieRoomDatabase.getDatabase(requireContext()).movieDao().delete(MovieModelDB(image!!))
-                }
-            }
+        val id = arguments?.getInt("ID")
+        vm.hasLike.observe(viewLifecycleOwner) {
+            isMovieLiked -> binding.likeImage.isChecked = !isMovieLiked!!
+        }
+        binding.likeImage.setOnCheckedChangeListener {
+                _, _ -> vm.checkMovie(
+                    requireContext().applicationContext,
+                    image!!,
+                    id!!
+                )
         }
     }
 }
