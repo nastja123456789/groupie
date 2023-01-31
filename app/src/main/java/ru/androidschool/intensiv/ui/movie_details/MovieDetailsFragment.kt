@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.observe
 import coil.api.load
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.*
@@ -46,16 +47,15 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val rating = arguments?.getInt("rating")
         binding.movieRating.rating = rating!!.toFloat()
         val id = arguments?.getInt("ID")
-        binding.likeImage.isChecked = vm.hasLike.value == false
-        binding.likeImage.setOnClickListener {
-            vm.checkMovie(requireContext(), id!!)
-            vm.hasLike.observe(viewLifecycleOwner) {
-                if (vm.hasLike.value == true) {
-                    vm.deleteImage(requireContext(), image!!, id)
-                } else if (vm.hasLike.value == false){
-                    vm.setImage(requireContext(),image!!, id)
-                }
-            }
+        vm.hasLike.observe(viewLifecycleOwner) {
+            isMovieLiked -> binding.likeImage.isChecked = !isMovieLiked!!
+        }
+        binding.likeImage.setOnCheckedChangeListener {
+                _, _ -> vm.checkMovie(
+                    requireContext().applicationContext,
+                    image!!,
+                    id!!
+                )
         }
     }
 }

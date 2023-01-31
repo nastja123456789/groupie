@@ -16,36 +16,35 @@ class MovieViewModel : ViewModel() {
 
     private val liveResId = MutableLiveData<Int>()
 
-    fun setLike(boolean: Boolean) {
+    private fun setLike(boolean: Boolean) {
         liveHasLike.value = boolean
     }
 
-    fun setImage(context: Context, image: String, id: Int) {
+    private fun setImage(context: Context, image: String, id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().insert(MovieModelDB(id, image))
         }
-        Log.d("olololol1","${liveHasLike.value}")
     }
-    fun deleteImage(context: Context, image: String, id: Int) {
+    private fun deleteImage(context: Context, image: String, id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().delete(MovieModelDB(id, image))
         }
-        Log.d("olololol2","${liveHasLike.value}")
     }
-    suspend fun exist(context: Context, id: Int):Boolean {
+    private suspend fun exist(context: Context, id: Int):Boolean {
         return withContext(Dispatchers.IO) {
             MovieRoomDatabase.getDatabase(context).movieDao().exists(id)
         }
     }
-    fun existing(context: Context, id: Int) {
-        viewModelScope.launch {
-            exist(context, id)
-        }
-    }
-    fun checkMovie(context: Context, movieId: Int) {
+
+    fun checkMovie(context: Context,image: String, movieId: Int) {
         viewModelScope.launch(Dispatchers.Main) {
-            liveHasLike.value = exist(context, movieId)
-            setLike(liveHasLike.value!!)
+            val isExits = exist(context, movieId)
+            if (isExits) {
+                deleteImage(context, image, movieId)
+            } else {
+                setImage(context, image, movieId)
+            }
+            setLike(isExits)
         }
     }
 }
