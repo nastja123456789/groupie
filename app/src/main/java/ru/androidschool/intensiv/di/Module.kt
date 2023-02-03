@@ -16,7 +16,10 @@ val dataModule = module {
 }
 
 val domainModule = module {
-    single<MoviesRepository> { TopRatedMoviesRemoteRepository() }
+    single<MoviesRepository> { TopRatedMoviesRemoteRepository(
+
+    ) }
+    single { TopRatedMoviesUseCase(get()) }
 }
 
 val presentationModule = module {
