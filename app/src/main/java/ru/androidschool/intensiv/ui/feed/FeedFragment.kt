@@ -136,11 +136,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
     override fun onStop() {
         super.onStop()
         searchBinding.searchToolbar.clear()
-        adapter.apply {
-            binding.moviesRecyclerView.adapter = adapter.apply { removeGroup(0) }
-            binding.moviesRecyclerView.adapter = adapter.apply { removeGroup(0) }
-        }
-
+        adapter.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
