@@ -11,6 +11,7 @@ import ru.androidschool.intensiv.data.mappers.MovieMapper
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    //test
     @Test
     fun movieToViewObject() {
         val movie = MovieMapper.toView(
