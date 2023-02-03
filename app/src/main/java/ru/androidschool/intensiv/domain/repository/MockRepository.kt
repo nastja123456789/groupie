@@ -1,20 +1,17 @@
 package ru.androidschool.intensiv.domain.repository
 
-import ru.androidschool.intensiv.data.vo.Movie
+import io.reactivex.Single
+import ru.androidschool.intensiv.data.vo.TVModel
 
-object MockRepository {
+class MockRepository : MoviesRepository {
 
-    fun getMovies(): List<Movie> {
-
-        val moviesList = mutableListOf<Movie>()
-        for (x in 0..10) {
-            val movie = Movie(
-                title = "Spider-Man $x",
-                voteAverage = 10.0 - x
+    override fun getMovies(): Single<List<TVModel>> {
+        return Single.just(
+            listOf(
+                TVModel(
+                    name = "Agent",
+                )
             )
-            moviesList.add(movie)
-        }
-
-        return moviesList
+        )
     }
 }

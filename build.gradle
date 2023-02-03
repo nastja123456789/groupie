@@ -53,4 +53,5 @@ ext {
     rxandroid = '2.1.1'
     adapterrxjava = '2.7.1'
     roomVersion = '2.2.1'
+    koin = '2.1.5'
 }

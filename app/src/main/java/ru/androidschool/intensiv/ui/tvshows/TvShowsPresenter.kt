@@ -2,13 +2,17 @@ package ru.androidschool.intensiv.ui.tvshows
 
 import android.annotation.SuppressLint
 import android.util.Log
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import ru.androidschool.intensiv.data.vo.TVModel
 import ru.androidschool.intensiv.ui.base.BasePresenter
 import timber.log.Timber
 import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
 
-class TvShowsPresenter(private val useCase: TopRatedMoviesUseCase):
-BasePresenter<TvShowsPresenter.FeedView>(){
+class TvShowsPresenter:
+BasePresenter<TvShowsPresenter.FeedView>(), KoinComponent {
+
+    private val useCase: TopRatedMoviesUseCase by inject()
 
     @SuppressLint("CheckResult")
     fun getMovies() {

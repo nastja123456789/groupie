@@ -58,8 +58,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment){
         super.onViewCreated(view, savedInstanceState)
         binding.progressBarWaitForResult.visibility = View.VISIBLE
         binding.moviesRecyclerView.visibility = View.INVISIBLE
-        val ratedMovie = MovieApiClient.apiClient.getTopRatedMovies(Extension.API_KEY,Extension.language)
-        val playMovie = MovieApiClient.apiClient.getNowPlayingMovies(Extension.API_KEY, Extension.language)
+        val ratedMovie = MovieApiClient.apiClient.getTopRatedMovies(Constants.API_KEY,Constants.language)
+        val playMovie = MovieApiClient.apiClient.getNowPlayingMovies(Constants.API_KEY, Constants.language)
         io.reactivex.Observable.zip(
             ratedMovie,
             playMovie,

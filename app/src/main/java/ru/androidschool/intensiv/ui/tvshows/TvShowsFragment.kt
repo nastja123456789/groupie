@@ -8,20 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import org.koin.android.ext.android.inject
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.data.vo.TVModel
-import ru.androidschool.intensiv.domain.repository.TopRatedMoviesRemoteRepository
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
-import ru.androidschool.intensiv.domain.usecase.TopRatedMoviesUseCase
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment), TvShowsPresenter.FeedView {
     private var _binding: TvShowsFragmentBinding? = null
     private val binding get() = _binding!!
     private var moviesList = listOf<Movie>()
     private var adapter = GroupAdapter<GroupieViewHolder>()
-    private val presenter: TvShowsPresenter by lazy {
-        TvShowsPresenter(TopRatedMoviesUseCase(TopRatedMoviesRemoteRepository()))
-    }
+    private val presenter: TvShowsPresenter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

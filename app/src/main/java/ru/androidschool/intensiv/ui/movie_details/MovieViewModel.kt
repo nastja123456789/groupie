@@ -35,7 +35,6 @@ class MovieViewModel : ViewModel() {
             MovieRoomDatabase.getDatabase(context).movieDao().exists(id)
         }
     }
-
     fun checkMovie(context: Context,image: String, movieId: Int) {
         viewModelScope.launch(Dispatchers.Main) {
             val isExits = exist(context, movieId)
