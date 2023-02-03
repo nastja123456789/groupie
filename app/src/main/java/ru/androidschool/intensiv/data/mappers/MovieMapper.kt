@@ -11,17 +11,21 @@ object MovieMapper {
         return list.results
     }
 
-    fun toView(movieModelDB: MovieModelDB): movie = movie(
-        title = movieModelDB.title,
-        voteAverage = 0.0
-    )
+    fun toView(movieModelDB: MovieModelDB): movie {
+        return movie(
+            title = movieModelDB.title,
+            voteAverage = 0.0
+        )
+    }
 
-    fun fromMovieDBtoMovieModel(movieModelDB: MovieModelDB):MovieModel = MovieModel(
-        title = movieModelDB.title,
-        voteAverage = 0.0,
-        overview = "",
-        releaseDate = null
-    )
+    fun fromMovieDBtoMovieModel(movieModelDB: MovieModelDB):MovieModel {
+        return MovieModel(
+            title = movieModelDB.title,
+            voteAverage = 0.0,
+            overview = "",
+            releaseDate = null)
+    }
+
     fun fromMovieToMovieDB(movie: movie):MovieModelDB = MovieModelDB(
         title = movie.title.toString()
     )

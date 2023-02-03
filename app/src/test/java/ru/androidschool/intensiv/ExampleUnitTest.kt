@@ -12,15 +12,18 @@ import ru.androidschool.intensiv.data.mappers.MovieMapper
  */
 class ExampleUnitTest {
     @Test
-    fun mapperToView() {
+    fun movieToViewObject() {
         val movie = MovieMapper.toView(
             movieModelDB = MovieModelDB(1, "новость")
         )
-        assertEquals(movie.title, "новость")
+        assertEquals(movie.title, BEFORE)
     }
 
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+    companion object {
+        const val BEFORE = "новость"
     }
 }
